@@ -1,5 +1,4 @@
-Исследование происводительности класса `variant`, а точнее метода `visit` для извлечения объектов из варианта
-
+Исследование проиpводительности класса `variant` (точнее метода `visit` для извлечения объектов из варианта)
 Для исследования производительности выбраны следующие реализации класса `variant`:
 1. std::variant 
 2. boost::variant 
@@ -9,9 +8,14 @@
 6. [Eggs.Variant](https://github.com/eggs-cpp/variant)
 7. [variant lite](https://github.com/martinmoene/variant-lite)
 
-Для проведения бенчмарка использовался [`Catch2 BENCHMARK`](https://github.com/catchorg/Catch2/blob/devel/docs/benchmarks.md)
-Посмотрим результаты (было выполнено 5 замеров timerun_1 - timerun_5):
 
+Для проведения бенчмарка использовался [`Catch2 BENCHMARK`](https://github.com/catchorg/Catch2/blob/devel/docs/benchmarks.md).
+Тест очень прост: создаем три структуры с разноименными типами данных, для всех структур реализуется одноименных метод. 
+Далее создаем объект каждой указанной выше библиотеки `variant` с тремя этими структурами. Создаем вектор, в который помещаем `variant` 
+для удобства извлечения объектов, помещенных внутрь `variant`.
+Используем метод `visit` для извлечения объевтов из `variant`.
+
+Посмотрим результаты (было выполнено 5 замеров timerun_1 - timerun_5):
 
 |    Variant     | timerun_1, ns |timerun_2, ns | timerun_3, ns|timerun_4, ns |timerun_5, ns |
 | -------------- | ------------- | ------------ | ------------ | ------------ | ------------ |
@@ -25,7 +29,9 @@
 
 
 Для каждого замера выделены два варианта с наилучшим временным показателем.
-Как видно из таблицы, во всех случаях быстрее всех реализуется метод `visit` для библиотеки [`Mapbox Variant`](https://github.com/mapbox/variant/tree/master).
-Ддля остальных варинтов временной показатель нестабилен: наблюдаются колебания производительности.
-Наибольшие колебания характерны для [`variant lite`](https://github.com/martinmoene/variant-lite)
+Как видно из таблицы, во всех случаях самым быстрым является реализация метода `visit` у библиотеки [`Mapbox Variant`](https://github.com/mapbox/variant/tree/master).
+Возможно стоит подробнее изучить [`mapbox::util::apply_visitor()`](https://github.com/mapbox/variant/blob/f87fcbda9daf13fba47a6a889696b0ad23fc098d/include/mapbox/variant.hpp#L923).
+Для остальных варинтов временной показатель нестабилен: наблюдаются колебания производительности.
+Наибольшие колебания характерны для [`variant lite`](https://github.com/martinmoene/variant-lite)/
+
 

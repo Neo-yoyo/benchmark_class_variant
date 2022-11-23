@@ -31,7 +31,6 @@ struct value_type_two {
     void single() {
         int ch_i = static_cast<int>(ch);
         auto sum = ui + f + ch_i;
-//        std::cout << "two \n";
     }
 };
 
@@ -44,8 +43,6 @@ struct value_type_three {
     void single() {
         h.append(w);
     }
-
-
 };
 
 
@@ -82,7 +79,6 @@ void make_visitor_boost(){
 
     for (auto&& item : vector) {
         boost::apply_visitor(call_single, item);
-
     }
 }
 
@@ -177,6 +173,9 @@ void make_visitor_nonstd(){
          nonstd::visit(call_single, item);
     }
 }
+
+
+
 
 
 

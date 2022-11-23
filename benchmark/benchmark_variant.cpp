@@ -3,18 +3,6 @@
 #include <catch2/catch_all.hpp>
 
 
-//int main(){
-
-//    make_visitor_std();
-//    make_visitor_boost();
-//    make_visitor_boost_2();
-//    make_visitor_mpark();
-//    make_visitor_mapbox();
-//    make_visitor_eggs();
-//    make_visitor_nonstd();
-
-//}
-
 TEST_CASE( "variant", "[benchmark]" ) {
 
     BENCHMARK("std_variant") {
