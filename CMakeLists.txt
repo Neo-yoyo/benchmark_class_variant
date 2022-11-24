@@ -8,8 +8,20 @@ include(FetchContent)
 #### Settings ####
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(BENCHMARK_ENABLE_TESTING NO)
 
 enable_testing()
+
+#### Dependencies ####
+find_package(googlebenchmark QUIET)
+if(NOT googlebenchmark_FOUND)
+FetchContent_Declare(
+    googlebenchmark
+    GIT_REPOSITORY https://github.com/google/benchmark.git
+    GIT_TAG origin/main
+)
+    FetchContent_MakeAvailable(googlebenchmark)
+endif()
 
 #### Dependencies ####
 find_package(Catch2 3 CONFIG)
@@ -26,6 +38,7 @@ if(NOT Catch2_FOUND)
     list(POP_BACK CMAKE_MESSAGE_INDENT)
 endif()
 
+
 find_package(mpark_variant QUIET)
 if(NOT mpark_variant_FOUND)
     FetchContent_Declare(
@@ -34,8 +47,8 @@ if(NOT mpark_variant_FOUND)
         GIT_TAG master
     )
     FetchContent_MakeAvailable(mpark_variant)
-
 endif()
+
 
 find_package(mapbox_variant QUIET)
 if(NOT mapbox_variant_FOUND)
@@ -46,6 +59,7 @@ if(NOT mapbox_variant_FOUND)
     )
     FetchContent_MakeAvailable(mapbox_variant)
 endif()
+
 
 find_package(eggs_variant QUIET)
 if(NOT eggs_variant_FOUND)
@@ -62,6 +76,7 @@ if(NOT eggs_variant_FOUND)
     FetchContent_MakeAvailable(eggs_variant)
 endif()
 
+
 find_package(nonstd_variant QUIET)
 if(NOT nonstd_variant_FOUND)
     FetchContent_Declare(
@@ -72,5 +87,10 @@ if(NOT nonstd_variant_FOUND)
     FetchContent_MakeAvailable(nonstd_variant)
 endif()
 
+
 #### Tests ####
 add_subdirectory(benchmark/)
+
+#add_test(NAME bmvariant COMMAND bmvariant)
+
+
