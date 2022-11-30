@@ -91,6 +91,5 @@ endif()
 #### Tests ####
 add_subdirectory(benchmark/)
 
-#add_test(NAME bmvariant COMMAND bmvariant)
 
 
